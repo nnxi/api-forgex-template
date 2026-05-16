@@ -1,2 +1,2 @@
 # api-forgex-template
-Template for api-forgex cli tool
+Template for api-forgex-cli tool
