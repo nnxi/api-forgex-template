@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0
-    container_name: node-mysql-db
+    container_name: ${DB_NAME}-db
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -9,8 +9,9 @@ services:
     ports:
       - "${DB_PORT}:3306"
     volumes:
-      # Mount init.sql to auto-initialize the database
+      <%_ if (useUsersDomain) { _%>
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      <%_ } _%>
       # Persist data even if container is deleted
       - mysql_data:/var/lib/mysql
 
