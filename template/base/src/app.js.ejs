@@ -5,9 +5,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 <% } -%>
 
-<% if (useErrorHandler) { -%>
 import errorHandler from './middlewares/errorHandler.js';
-<% } -%>
 
 <% if (useUsersDomain) { -%>
 // Import routers
@@ -59,9 +57,7 @@ app.get('/health', (req, res) => {
     res.status(200).send('OK');
 });
 
-<% if (useErrorHandler) { -%>
 app.use(errorHandler);
-<% } -%>
 
 // Start server
 app.listen(port, () => {
