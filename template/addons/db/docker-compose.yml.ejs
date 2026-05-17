@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0
-    container_name: ${DB_NAME}-db
+    container_name: ${DB_NAME}
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
