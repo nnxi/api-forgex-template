@@ -7,7 +7,7 @@ const findById = async (id) => {
 };
 
 const findByEmail = async (email) => {
-    const query = 'SELECT id FROM users WHERE email = ?';
+    const query = 'SELECT id, password, status FROM users WHERE email = ?';
     const [rows] = await pool.execute(query, [email]);
     return rows[0];
 };
