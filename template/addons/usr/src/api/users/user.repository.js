@@ -1,13 +1,13 @@
 import pool from '../../config/database.js';
 
 const findById = async (id) => {
-    const query = 'SELECT id, nickname, status FROM users WHERE id = ?';
+    const query = 'SELECT id, nickname, status FROM users WHERE id = ? AND deleted_at IS NULL';
     const [rows] = await pool.execute(query, [id]);
     return rows[0];
 };
 
 const findByEmail = async (email) => {
-    const query = 'SELECT id, password, status FROM users WHERE email = ?';
+    const query = 'SELECT id, nickname, password, status, deleted_at FROM users WHERE email = ?';
     const [rows] = await pool.execute(query, [email]);
     return rows[0];
 };

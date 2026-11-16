@@ -55,7 +55,7 @@ const login = async (email, password) => {
         throw error;
     }
 
-    if (user.status !== 'ACTIVE') {
+    if (user.deleted_at || user.status !== 'ACTIVE') {
         const error = new Error('Account is not active.');
         error.status = 403;
         error.code = 'ACCOUNT_INACTIVE';
