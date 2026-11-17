@@ -1,5 +1,6 @@
 services:
   db:
+    <%_ if (dbType === 'mysql') { _%>
     image: mysql:8.0
     container_name: ${DB_NAME}
     restart: always
@@ -17,3 +18,23 @@ services:
 
 volumes:
   mysql_data:
+    <%_ } else if (dbType === 'postgres') { _%>
+    image: postgres:16-alpine
+    container_name: ${DB_NAME}
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      <%_ if (useUsersDomain) { _%>
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      <%_ } _%>
+      # Persist data even if container is deleted
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    <%_ } _%>

@@ -23,8 +23,10 @@
     <%_ if (useJWT) { _%>
     "jsonwebtoken": "^9.0.3",
     <%_ } _%>
-    <%_ if (useDB) { _%>
+    <%_ if (dbType === 'mysql') { _%>
     "mysql2": "^3.22.1",
+    <%_ } else if (dbType === 'postgres') { _%>
+    "pg": "^8.16.0",
     <%_ } _%>
     <%_ if (useApiDocGen) { _%>
     "nodejs-api-docgen": "^1.0.0",
