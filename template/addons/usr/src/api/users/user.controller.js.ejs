@@ -1,5 +1,6 @@
 import * as userService from './user.service.js';
 
+<% if (framework === 'express') { -%>
 const getMyProfile = async (req, res, next) => {
     try {
         const id = req.user.id; 
@@ -34,7 +35,7 @@ const registerUser = async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-}
+};
 
 const login = async (req, res, next) => {
     try {
@@ -54,10 +55,58 @@ const login = async (req, res, next) => {
             data: {
                 token: result.token
             }
-        })
+        });
     } catch (error) {
         next(error);
     }
-}
+};
+<% } else if (framework === 'fastify') { -%>
+const getMyProfile = async (request, reply) => {
+    const id = request.user.id;
+    const profile = await userService.getProfile(id);
+    return reply.code(200).send({ success: true, data: profile });
+};
+
+const registerUser = async (request, reply) => {
+    const { name, email, nickname, password } = request.body || {};
+
+    if (!name || !email || !nickname || !password) {
+        const error = new Error('Missing required fields.');
+        error.status = 400;
+        error.code = 'MISSING_REQUIRED_FIELDS';
+        throw error;
+    }
+
+    const result = await userService.register(name, email, nickname, password);
+
+    return reply.code(201).send({
+        success: true,
+        data: {
+            id: result.id,
+            nickname: result.nickname
+        }
+    });
+};
+
+const login = async (request, reply) => {
+    const { email, password } = request.body || {};
+
+    if (!email || !password) {
+        const error = new Error('Missing required fields.');
+        error.status = 400;
+        error.code = 'MISSING_REQUIRED_FIELDS';
+        throw error;
+    }
+
+    const result = await userService.login(email, password);
+
+    return reply.code(200).send({
+        success: true,
+        data: {
+            token: result.token
+        }
+    });
+};
+<% } -%>
 
 export { getMyProfile, registerUser, login };

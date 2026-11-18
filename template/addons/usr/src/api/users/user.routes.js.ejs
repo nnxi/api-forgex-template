@@ -1,3 +1,4 @@
+<% if (framework === 'express') { -%>
 import express from 'express';
 import verifyToken from '../../middlewares/authMiddleware.js';
 import * as userController from './user.controller.js';
@@ -36,3 +37,15 @@ router.post('/register', userController.registerUser);
 router.post('/login', userController.login);
 
 export default router;
+<% } else if (framework === 'fastify') { -%>
+import verifyToken from '../../middlewares/authMiddleware.js';
+import * as userController from './user.controller.js';
+
+const userRoutes = async (fastify, options) => {
+    fastify.get('/me', { preHandler: [verifyToken] }, userController.getMyProfile);
+    fastify.post('/register', userController.registerUser);
+    fastify.post('/login', userController.login);
+};
+
+export default userRoutes;
+<% } -%>

@@ -14,9 +14,14 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    <%_ if (framework === 'express') { _%>
     "cors": "^2.8.6",
-    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    <%_ } else if (framework === 'fastify') { _%>
+    "@fastify/cors": "^11.0.0",
+    "fastify": "^5.2.0",
+    <%_ } _%>
+    "dotenv": "^17.4.2",
     <%_ if (useUsersDomain) { _%>
     "bcrypt": "^6.0.0",
     <%_ } _%>
