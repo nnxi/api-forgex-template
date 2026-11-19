@@ -89,7 +89,7 @@
 | `DB_USER` | `<%= dbType === 'postgres' ? 'postgres' : 'root' %>` | 데이터베이스 계정 |
 | `DB_PASSWORD` | *(설정한 비밀번호)* | 데이터베이스 비밀번호 |
 | `DB_NAME` | `<%= projectName.replace(/-/g, '_') %>_db` | 데이터베이스 이름 |
-| `DB_PORT` | `<%= dbType === 'postgres' ? 5432 : 3306 %>` | 데이터베이스 포트 |
+| `DB_PORT` | `<%= dbType === 'postgres' ? 5432 : 3307 %>` | 데이터베이스 포트 |
 <% } -%>
 
 <% if (useDB) { -%>
